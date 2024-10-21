@@ -47,8 +47,7 @@ p <- ggplot(data1962, aes(
   #scale_y_log10() +
   geom_smooth(method = "lm", se = FALSE)
 
-p
-
+ggsave(p, filename="Week-1/figures/CO2_emissions_GDP_per_capita_1962.png")
 anyNA(data) #check missing values
 
 
@@ -57,12 +56,14 @@ cont_energy <- data %>%
   drop_na(continent, energy_use, Year) %>%
   select(continent, energy_use, Year)
 
-cont_energy %>%
+cp <- cont_energy %>%
 ggplot(aes(x=continent, y=energy_use)) +
            geom_boxplot() +
            scale_y_log10() +
            ylab("Energy use (kg of oil equivalent/capita)") +
            ggtitle("Global energy use (1962-2007)") 
+
+ggsave(cp, filename="Week-1/figures/energy_use_boxplot.png")
 
 #Country with highest population density over the years
 gapminderd <- data %>%
@@ -77,24 +78,26 @@ gapminderd <- data %>%
 gapminderd
 
 
-ggplot(roundedGMD, aes(x=country, y = medpopden, fill = country)) +
+g2 <- ggplot(gapminderd, aes(x=country, y = medpopden, fill = country)) +
            labs(title = "Countries with highest population density (people/sq.km) between 1962-2007",
                 y = "median population density (1962-2007)") +
            geom_col() + geom_text(aes(label=medpopden)) +
            theme (axis.text.x = element_text(angle=30, size=9,vjust=.8, hjust=0.8))
-
+ggsave(g2, filename="Week-1/figures/pop_density.png")
 
 #################################################################################
 ########################### Model Training #####################################
-
+install.packages("gapminder")
 library(gapminder)
 
-ggplot(gapminder_unfiltered, aes(gdpPercap, lifeExp)) +
+gp <-ggplot(gapminder_unfiltered, aes(gdpPercap, lifeExp)) +
   geom_point()
+ggsave(gp, filename="Week-1/figures/gdpPercap_lifeExp.png")
 
-ggplot(gapminder_unfiltered, aes(gdpPercap, lifeExp)) +
+gp <- ggplot(gapminder_unfiltered, aes(gdpPercap, lifeExp)) +
   geom_point() + 
   geom_smooth(method = "lm")
+ggsave(gp, filename="Week-1/figures/gdpPercap_lifeExp_lm.png")
 
 lm(lifeExp ~ gdpPercap, data = gapminder_unfiltered)
 
@@ -125,9 +128,10 @@ ggplot(gapPred, aes(gdpPercap)) +
 head(mtcars)
 
 #summary plot
-ggplot(mtcars, aes(mpg, am)) + 
+mt <- ggplot(mtcars, aes(mpg, am)) + 
   geom_point() + 
   geom_smooth(method = "lm", se = F)
+ggsave(mt, filename="Week-1/figures/mtcars_mpg_am.png")
 
 #train a logistic regression model
 logmod <- glm(am ~ mpg, data = mtcars, family = binomial)
