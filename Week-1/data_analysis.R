@@ -49,7 +49,7 @@ p <- ggplot(data1962, aes(
 
 ggsave(p, filename="Week-1/figures/CO2_emissions_GDP_per_capita_1962.png")
 anyNA(data) #check missing values
-
+#na.omit(data)
 
 cont_energy <- data %>%
   rename("energy_use" = "Energy.use..kg.of.oil.equivalent.per.capita.")%>%

@@ -1,10 +1,13 @@
 #### scRNA-Seq Analysis Workshop Module #2: Data Prep & QC ####
 
+set.seed(42)
+
 # Check for missing packages, install if needed
 list_of_pkgs <- c("hdf5r", "tidyverse", "ggpubr")
 install.packages(list_of_pkgs[! list_of_pkgs %in% rownames(installed.packages())])
 
 # Load libraries
+library(spatstat.core)
 library(Seurat)
 library(tidyverse)
 library(ggpubr)
@@ -161,5 +164,5 @@ hist(pbmc$percent.mt)
 # Make a violin plot of the QC columns
 plt <- VlnPlot(pbmc, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"),
                ncol = 3) 
-ggsave(filename = "QC.png", plot = plt, width = 7, height = 3.5)
+ggsave(filename = "Week-1/figures/QC.png", plot = plt, width = 7, height = 3.5)
 
