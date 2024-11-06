@@ -49,3 +49,8 @@ po/*~
 rsconnect/
 Week-1/data/data.csv
 Week-1/data/data.RDS
+
+**/*.DS_Store
+**/*.html
+**/*.DS_Store
+
